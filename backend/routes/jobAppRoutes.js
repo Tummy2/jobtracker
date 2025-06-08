@@ -8,10 +8,11 @@ const {
   modifyJobApp,
   deleteJobApp,
 } = require("../controllers/jobAppsController");
+const authenticate = require("../middleware/authenticate");
 
-router.get("/", getUserJobs);
-router.post("/", addJobApp);
-router.put("/:id", modifyJobApp);
-router.delete("/:id", deleteJobApp);
+router.get("/", authenticate, getUserJobs);
+router.post("/", authenticate, addJobApp);
+router.put("/:id", authenticate, modifyJobApp);
+router.delete("/:id", authenticate, deleteJobApp);
 
 module.exports = router;
