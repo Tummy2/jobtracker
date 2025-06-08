@@ -15,4 +15,7 @@ app.use((req, res, next) => {
 const jobAppRoutes = require("./routes/jobAppRoutes");
 app.use("/api/jobs", jobAppRoutes);
 
+const authRoutes = require("./routes/authRoutes");
+app.use("/api/auth", authRoutes);
+
 module.exports = app;
