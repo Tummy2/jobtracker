@@ -1,7 +1,7 @@
 // all my express config stuff
 
-const express = require('express');
-const cors = require('cors');
+const express = require("express");
+const cors = require("cors");
 const app = express();
 
 app.use(express.json());
@@ -12,7 +12,7 @@ app.use((req, res, next) => {
   next();
 });
 
-const jobAppRoutes = require('./routes/jobAppRoutes');
-app.use('/api/jobs', jobAppRoutes);
+const jobAppRoutes = require("./routes/jobAppRoutes");
+app.use("/api/jobs", jobAppRoutes);
 
 module.exports = app;

@@ -1,8 +1,13 @@
 // routes for everything job app related
 
-const express = require('express');
+const express = require("express");
 const router = express.Router();
-const { getUserJobs, addJobApp, modifyJobApp, deleteJobApp } = require('../controllers/jobAppsController');
+const {
+  getUserJobs,
+  addJobApp,
+  modifyJobApp,
+  deleteJobApp,
+} = require("../controllers/jobAppsController");
 
 router.get("/", getUserJobs);
 router.post("/", addJobApp);
