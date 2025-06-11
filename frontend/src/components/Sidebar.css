@@ -1,0 +1,30 @@
+/* If not using, remove the import in Sidebar.jsx */
+.sidebar {
+    width: 200px;
+    background-color: #1e1e2f;
+    color: white;
+    padding: 1rem;
+  }
+  
+  .sidebar h2 {
+    margin-bottom: 1rem;
+  }
+  
+  .sidebar ul {
+    list-style: none;
+    padding: 0;
+  }
+  
+  .sidebar li {
+    margin: 0.5rem 0;
+  }
+  
+  .sidebar a {
+    color: white;
+    text-decoration: none;
+  }
+  
+  .sidebar a:hover {
+    text-decoration: underline;
+  }
+  
