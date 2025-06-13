@@ -7,6 +7,25 @@ require("dotenv").config();
 
 const SECRET = process.env.JWT_SECRET;
 
+async function getUser(req, res) {
+  const userId = req.user.userId;
+
+  try {
+    const result = await pool.query(
+      `SELECT id, username, email FROM users WHERE id = $1`,
+      [userId]
+    );
+
+    if (result.rowCount === 0) {
+      return res.status(404).json({ message: "User not found" });
+    }
+    res.status(200).json(result.rows[0]);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Server error" });
+  }
+}
+
 async function registerUser(req, res) {
   const { username, email, password } = req.body;
   if (!username || !email || !password) {
@@ -83,4 +102,4 @@ async function deleteUser(req, res) {
   }
 }
 
-module.exports = { registerUser, loginUser, deleteUser };
+module.exports = { getUser, registerUser, loginUser, deleteUser };

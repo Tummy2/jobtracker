@@ -16,13 +16,26 @@ async function getUserJobs(req, res) {
 }
 
 async function addJobApp(req, res) {
-  const { company_name, job_title, app_status, app_date, app_link } = req.body;
+  const {
+    company_name,
+    job_title,
+    application_status,
+    application_date,
+    application_link,
+  } = req.body;
   const userId = req.user.userId;
   try {
     await pool.query(
       `INSERT INTO job_applications (user_id, company_name, job_title, application_status, application_date, application_link)
             VALUES ($1, $2, $3, $4, $5, $6)`,
-      [userId, company_name, job_title, app_status, app_date, app_link]
+      [
+        userId,
+        company_name,
+        job_title,
+        application_status,
+        application_date,
+        application_link,
+      ]
     );
     res.status(201).json({ message: "Job application added successfully" });
   } catch (error) {
@@ -32,15 +45,24 @@ async function addJobApp(req, res) {
 }
 
 async function modifyJobApp(req, res) {
-  const { company_name, job_title, app_status, app_date, app_link } = req.body;
+  console.log(req.body);
+  const { company_name, job_title, application_status, application_date, application_link } = req.body;
   const userId = req.user.userId;
   const { id } = req.params;
   try {
     const result = await pool.query(
       `UPDATE job_applications 
           SET company_name = $1, job_title = $2, application_status = $3, application_date = $4, application_link = $5 
-          WHERE id = $6 AND user_id = $7`,
-      [company_name, job_title, app_status, app_date, app_link, id, userId]
+          WHERE id = $6 AND user_id = $7 RETURNING *`,
+      [
+        company_name,
+        job_title,
+        application_status,
+        application_date,
+        application_link,
+        id,
+        userId,
+      ]
     );
 
     if (result.rowCount === 0) {
@@ -49,7 +71,7 @@ async function modifyJobApp(req, res) {
         .json({ message: "Failed to modify job application" });
     }
 
-    res.status(200).json({ message: "Job application modified successfully" });
+    res.status(200).json(result.rows[0]);
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: "Server error" });
