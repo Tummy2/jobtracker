@@ -25,9 +25,9 @@ async function addJobApp(req, res) {
   } = req.body;
   const userId = req.user.userId;
   try {
-    await pool.query(
+    const result = await pool.query(
       `INSERT INTO job_applications (user_id, company_name, job_title, application_status, application_date, application_link)
-            VALUES ($1, $2, $3, $4, $5, $6)`,
+            VALUES ($1, $2, $3, $4, $5, $6) RETURNING *`,
       [
         userId,
         company_name,
@@ -37,7 +37,14 @@ async function addJobApp(req, res) {
         application_link,
       ]
     );
-    res.status(201).json({ message: "Job application added successfully" });
+
+    if (result.rowCount === 0) {
+      return res
+        .status(404)
+        .json({ message: "Failed to add job application" });
+    }
+
+    res.status(200).json(result.rows[0]);
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: "Server error" });
