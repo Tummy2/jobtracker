@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import AddJobButton from "../components/AddJobButton";
 
 export default function Home() {
   const [jobApps, setJobApps] = useState([]);
@@ -137,29 +138,9 @@ export default function Home() {
 
   return (
     <div>
-      <div
-        style={{
-          display: "flex",
-          justifyContent: "space-between",
-          alignItems: "center",
-          marginBottom: "20px",
-        }}
-      >
-        <h1>My Job Applications</h1>
-        <button
-          onClick={() => setShowAddForm(true)}
-          style={{
-            padding: "8px 16px",
-            backgroundColor: "#007bff",
-            color: "white",
-            border: "none",
-            borderRadius: "4px",
-            cursor: "pointer",
-          }}
-        >
-          Add Job
-        </button>
-      </div>
+      <AddJobButton
+        showAddForm={setShowAddForm}
+      />
 
       {/* Add Job Form Modal */}
       {showAddForm && (
